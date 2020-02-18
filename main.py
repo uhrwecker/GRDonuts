@@ -1,10 +1,10 @@
-from spacetime.potential import *
-from spacetime.inv import InverseKerr
+from spacetime.schwarzschild import *
+from spacetime.kerr import *
+from inverse.kerr import InverseKerr
 from vis.simple import *
 from vis.polar import *
-from inverse.inverse import *
 import matplotlib.pyplot as pl
 
-i = InverseKerr(w=-0.042)
-p = PolarPlotter()
+i = Schwarzschild()
+p = SimplePlotter()
 p.plot(i)
