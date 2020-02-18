@@ -2,7 +2,7 @@ import numpy as np
 from spacetime.potential import Potential
 
 class InverseKerr(Potential):
-    def __init__(self, w=-0.0042, a=0.5, l=4.14,
+    def __init__(self, w=-0.042, a=0.5, l=4.14,
                  r_range=(2, 18), num=10000, cont_without_eq=False,
                  verbose=True):
         super().__init__(r_range=r_range, num=num,

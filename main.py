@@ -6,6 +6,7 @@ from vis.simple import *
 from vis.polar import *
 import matplotlib.pyplot as pl
 
-i = InverseSchwarzschild()
-p = PolarPlotter()
-p.plot(i, ymargin=15)
+i1 = InverseKerr()
+i2 = InverseKerr(w=-0.041)
+p = PolarScharrPlotter()
+p.plot([i1, i2], ['w=-0.042', 'w=-0.041'], ymargin=15)
