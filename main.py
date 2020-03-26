@@ -5,14 +5,14 @@ from inverse.kerr import InverseKerr
 from inverse.schwarzschild import InverseSchwarzschild
 from vis.simple import *
 from vis.polar import *
+from vis.variation import *
 
 import matplotlib.pyplot as pl
 
 
-k = QMetric(r_range=(2, 30), verbose=True)
-k.two_parameter_variation_stability_test('q', (-5, 5), 'l', (0, 15),
-                                         num1=50, num2=50)
+k = Kerr()
+p = TwoParamVarPlotter()
+p.plot(k, 'a', (0, 1), 'l', (0, 8))
 
-k = QMetric()
-p = BeautyPlotter()
-p.plot(k, label='')
+
+

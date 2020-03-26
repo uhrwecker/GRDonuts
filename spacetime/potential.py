@@ -58,8 +58,8 @@ class Potential():
         return closed_values
 
     def two_parameter_variation_stability_test(self, name1, rang1,
-                                               name2, rang2, num1=1000,
-                                               num2=1000, log_open=False):
+                                               name2, rang2, num1=100,
+                                               num2=100, log_open=False):
         def check_for_stability(name1, value1, name2, value2):            
             setattr(self, name1, value1)
             setattr(self, name2, value2)
