@@ -17,6 +17,17 @@ class Potential():
         '''
         raise NotImplementedError
 
+    def get_w(self):
+        w = self.compute_w()
+        self.util.check_for_stable_point(w, self.cwouteq)
+        return w
+
+    def get_r(self):
+        return self.r
+
+    def get_r_range(self):
+        return self.r_in, self.r_out
+
     def one_parameter_variation_stability_test(self, name, rang,
                                                num=1000, log_open=False):
         
@@ -45,18 +56,40 @@ class Potential():
             print('No closed surfaces found for the specified range.')
 
         return closed_values
-            
-    def get_w(self):
-        w = self.compute_w()
-        self.util.check_for_stable_point(w, self.cwouteq)
-        return w
 
-    def get_r(self):
-        return self.r
+    def two_parameter_variation_stability_test(self, name1, rang1,
+                                               name2, rang2, num1=1000,
+                                               num2=1000, log_open=False):
+        def check_for_stability(name1, value1, name2, value2):            
+            setattr(self, name1, value1)
+            setattr(self, name2, value2)
+            self.get_w()
 
-    def get_r_range(self):
-        return self.r_in, self.r_out
+        self.cwouteq = True
+        self.util.verbose = False
 
+        closed_values = []
+        for v1 in np.linspace(rang1[0], rang1[1], num=num1):
+            row = []
+            for v2 in np.linspace(rang2[0], rang2[1], num=num2):
+                try:
+                    check_for_stability(name1, v1, name2, v2)
+                    #row.append((v1, v2))
+                    row.append(1)
+                    if self.verbose:
+                        print('- closed for {}={} and {}={}!'.format(name1, v1,
+                                                                 name2, v2))
+                except:
+                    row.append(np.nan)
+                    if log_open:
+                        if self.verbose:
+                            print('- open for {}={} and {}={}.'.format(name1, v1,
+                                                                   name2, v2))
+                    else:
+                        pass
+            closed_values.append(row)
+                    
+        return closed_values
 
 
 
