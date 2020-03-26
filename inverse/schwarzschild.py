@@ -18,3 +18,6 @@ class InverseSchwarzschild(Potential):
         res2 = np.arccos(-np.sqrt(arg)) - np.pi
 
         return np.concatenate((res2, res1))
+
+    def horizon(self, theta):
+        return [2 for n in range(len(theta))]

@@ -33,3 +33,6 @@ class InverseKerr(Potential):
         sin_theta = - np.sqrt(pq)
         res2 = np.arcsin(sin_theta) - 3* np.pi/2
         return np.concatenate((res2, res1))
+
+    def horizon(self, theta):
+        return 1 + np.sqrt(1 - self.a**2 * np.sin(theta)**2)
