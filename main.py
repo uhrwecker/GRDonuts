@@ -7,8 +7,7 @@ from vis.simple import *
 from vis.polar import *
 import matplotlib.pyplot as pl
 
-k = Kerr()
+
+k = QMetric()
 p = BeautyPlotter()
-p.plot(k)
-
-
+p.plot(k, label='')
