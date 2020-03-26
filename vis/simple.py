@@ -21,7 +21,7 @@ class SimplePlotter(Plotter):
         super().__init__(figsize=figsize, save=save)
 
     def plot(self, potential, label='', xmargin=0, ymargin=0.003):
-        w = potential.compute_w()
+        w = potential.get_w()
         r = potential.get_r()
         wmin, wmax, _, _ = potential.util.retrieve_extrema(w, r)
         pl.plot(r, w, label=label)
@@ -41,7 +41,7 @@ class ScharPlotter(Plotter):
         yminmin = 1000
         ymaxmax = -1000
         for item, label in zip(pot_list, label_list):
-            w = item.compute_w()
+            w = item.get_w()
             r = item.get_r()
             wmin, wmax, _, _ = item.util.retrieve_extrema(w, r)
             pl.plot(r, w, label=label)
@@ -63,7 +63,7 @@ class BeautyPlotter(Plotter):
     def plot(self, potential, label='', xmargin=0, ymargin=0.003,
              show=True, fill=True, max_show=True):
         r = potential.get_r()
-        w = potential.compute_w()
+        w = potential.get_w()
         wmin, wmax, rmin, rmax = potential.util.retrieve_extrema(w, r)
         int_l = np.where(r == rmax[0])[0][0]
         int_r = np.where(w > wmax[0])[0][0]

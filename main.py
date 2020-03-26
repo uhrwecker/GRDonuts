@@ -5,9 +5,9 @@ from inverse.kerr import InverseKerr
 from inverse.schwarzschild import InverseSchwarzschild
 from vis.simple import *
 from vis.polar import *
-import matplotlib.pyplot as pl
 
 
-k = QMetric()
-p = BeautyPlotter()
-p.plot(k, label='')
+k = Kerr()
+k.one_parameter_variation_stability_test('a', (0, 1))
+#p = BeautyPlotter()
+#p.plot(k, label='')

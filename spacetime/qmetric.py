@@ -21,6 +21,4 @@ class QMetric(Potential):
 
         w = 0.5 * np.log(oben/unten)
 
-        self.util.check_for_stable_point(w, self.cwouteq)
-
         return w

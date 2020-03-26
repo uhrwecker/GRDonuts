@@ -17,8 +17,6 @@ class Schwarzschild(Potential):
 
         w = 0.5 * np.log(oben/unten)
 
-        self.util.check_for_stable_point(w, self.cwouteq)
-
         return w
 
 ###################################################################
@@ -39,7 +37,5 @@ class SchwarzschildDeSitter(Potential):
         unten = self.r**2 * np.sin(self.theta)**2 - alpha * self.l**2
 
         w = 0.5 * np.log(oben/unten)
-
-        self.util.check_for_stable_point(w, self.cwouteq)
 
         return w

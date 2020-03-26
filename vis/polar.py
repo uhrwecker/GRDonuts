@@ -7,7 +7,7 @@ class SimplePolarPlotter(Plotter):
         super().__init__(figsize=figsize, save=save)
 
     def plot(self, potential, label='', xmargin=0, ymargin=10):
-        thetas = potential.compute_w()
+        thetas = potential.compute_theta()
         r = potential.get_r()
         rs = np.concatenate((r, r))
 
@@ -29,7 +29,7 @@ class PolarScharrPlotter(Plotter):
     def plot(self, pot_list, label_list, xmargin=0, ymargin=0.003,
              legend_loc='best', last_closed=None, horizon=False):
         for item, label in zip(pot_list, label_list):
-            thetas = item.compute_w()
+            thetas = item.compute_theta()
             r = item.get_r()
             rs = np.concatenate((r, r))
 
@@ -45,7 +45,7 @@ class PolarScharrPlotter(Plotter):
                 
 
         if last_closed:
-            theta = last_closed.compute_w()
+            theta = last_closed.compute_theta()
             r = last_closed.get_r()
             rs = np.concatenate((r, r))
             pl.polar(theta, rs, label='last closed surfaces at w={}'.format(last_closed.w),

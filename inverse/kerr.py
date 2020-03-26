@@ -1,7 +1,7 @@
 import numpy as np
-from spacetime.potential import Potential
+from inverse.inverse_potential import InversePotential
 
-class InverseKerr(Potential):
+class InverseKerr(InversePotential):
     def __init__(self, w=-0.042, a=0.5, l=4.14,
                  r_range=(2, 18), num=10000, cont_without_eq=False,
                  verbose=True):
@@ -13,7 +13,7 @@ class InverseKerr(Potential):
         self.a = a
         self.l = l
 
-    def compute_w(self):
+    def compute_theta(self):
         Delta = self.r**2 - 2*self.r + self.a**2
         alpha = np.exp(2*self.w)
         beta = self.r**2 * (self.r**2 + self.a**2)
@@ -32,6 +32,7 @@ class InverseKerr(Potential):
         res1 = np.arcsin(sin_theta) - np.pi/2
         sin_theta = - np.sqrt(pq)
         res2 = np.arcsin(sin_theta) - 3* np.pi/2
+        
         return np.concatenate((res2, res1))
 
     def horizon(self, theta):

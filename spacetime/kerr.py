@@ -26,7 +26,5 @@ class Kerr(Potential):
         nenner = b+c+d+e+f+g
         
         w = -0.5*np.log(nenner/zaehler)
-
-        self.util.check_for_stable_point(w, self.cwouteq)
         
         return w
