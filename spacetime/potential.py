@@ -93,7 +93,7 @@ class Potential():
                         pass
             closed_values.append(row)
 
-        closed_values = np.array(closed_values) / np.amax(np.array(closed_values))
+        #closed_values = np.array(closed_values) / np.amax(np.array(closed_values))
 
 
         return closed_values

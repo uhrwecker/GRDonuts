@@ -18,7 +18,8 @@ class OneParamVarPlotter(Plotter):
 
         print('Plotting ...')
         ax = pl.gca()
-        ax.plot(np.linspace(rang[0], rang[1], num=len(y_val)), y_val)
+        ax.plot(np.linspace(rang[0], rang[1], num=len(y_val)), y_val,
+                label='closure area (roche limit) for theta=pi/2')
 
         ax.set_ylim(0, 1.05)
         ax.set_xlim(rang[0], rang[1])
@@ -26,8 +27,10 @@ class OneParamVarPlotter(Plotter):
         ax.set_ylabel('closure rating')
         ax.set_xlabel(name)
 
+        pl.legend()
+
         if self.save:
-            pl.savefig(save)
+            pl.savefig(self.save)
 
         else:
             pl.show()
@@ -76,8 +79,8 @@ class TwoParamVarPlotter(Plotter):
         ax.xaxis.set_major_formatter(pl.FuncFormatter(format_func_x))
         ax.yaxis.set_major_formatter(pl.FuncFormatter(format_func_y))
 
-        #ax.axvline(self.num2/2, c='black')
-        #ax.axhline(self.num1/2, c='black')
+        ax.axvline(self.num2/2, c='black')
+        ax.axhline(self.num1/2, c='black')
 
 
         ax.set_ylim(0, self.num1)
@@ -87,7 +90,7 @@ class TwoParamVarPlotter(Plotter):
         ax.set_xlabel(self.n2)
 
         if self.save:
-            pl.savefig(save)
+            pl.savefig(self.save)
 
         else:
             pl.show()
