@@ -65,9 +65,16 @@ class BeautyPlotter(Plotter):
         r = potential.get_r()
         w = potential.get_w()
         wmin, wmax, rmin, rmax = potential.util.retrieve_extrema(w, r)
-        int_l = np.where(r == rmax[0])[0][0]
-        int_r = np.where(w > wmax[0])[0][0]
-
+        try:
+            int_l = np.where(r == rmax[0])[0][0]
+        except:
+            int_l = np.where(r == rmax[0])[0]
+        print(int_l)
+        try:
+            int_r = np.where(w > wmax[0])[0][0]
+        except:
+            raise ValueError('Increase r_range.')
+        
         if max_show:
             pl.axhline(wmax, alpha=0.5, c='red', ls='--')
         if fill:

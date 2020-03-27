@@ -10,9 +10,11 @@ from vis.variation import *
 import matplotlib.pyplot as pl
 
 
-k = Kerr()
+k = Kerr(verbose=True, r_range=(2, 200))
+values = k.one_parameter_variation_stability_test('l', (3, 5), num=1000)
+
 p = TwoParamVarPlotter()
-p.plot(k, 'a', (0, 1), 'l', (0, 8))
+p.plot(k, 'a', (-1, 1), 'l', (-10, 10), num1=100, num2=100)
 
 
 

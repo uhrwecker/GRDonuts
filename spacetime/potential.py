@@ -33,7 +33,7 @@ class Potential():
         
         def check_for_stability(name, value):            
             setattr(self, name, value)
-            self.get_w()
+            return self.get_w(), self.get_r()
 
         print('Start the variation on {}:'.format(name))
 
@@ -43,17 +43,20 @@ class Potential():
         closed_values = []
         for value in np.linspace(rang[0], rang[1], num=num):
             try:
-                check_for_stability(name, value)
-                closed_values.append(value)
+                w, r = check_for_stability(name, value)
+                closed_values.append(self.util.closure_rating_function(w, r))
                 print('- closed for {}={}!'.format(name, value))
             except:
+                closed_values.append(0)
                 if log_open:
                     print('- open for {}={}.'.format(name, value))
                 else:
                     pass
 
-        if closed_values == []:
-            print('No closed surfaces found for the specified range.')
+        if np.count_nonzero(closed_values) == 0:
+            raise ValueError('No closed surfaces found for the specified range.')
+
+        closed_values = np.array(closed_values) / np.amax(np.array(closed_values))
 
         return closed_values
 
@@ -63,7 +66,7 @@ class Potential():
         def check_for_stability(name1, value1, name2, value2):            
             setattr(self, name1, value1)
             setattr(self, name2, value2)
-            self.get_w()
+            return self.get_w(), self.get_r()
 
         self.cwouteq = True
         self.util.verbose = False
@@ -73,9 +76,8 @@ class Potential():
             row = []
             for v2 in np.linspace(rang2[0], rang2[1], num=num2):
                 try:
-                    check_for_stability(name1, v1, name2, v2)
-                    #row.append((v1, v2))
-                    row.append(1)
+                    w, r = check_for_stability(name1, v1, name2, v2)
+                    row.append(self.util.closure_rating_function(w, r))
                     if self.verbose:
                         print('- closed for {}={} and {}={}!'.format(name1, v1,
                                                                  name2, v2))
@@ -88,7 +90,7 @@ class Potential():
                     else:
                         pass
             closed_values.append(row)
-                    
+
         return closed_values
 
 

@@ -6,7 +6,7 @@ class TwoParamVarPlotter(Plotter):
         super().__init__(figsize=figsize, save=save)
 
     def plot(self, potential, name1, rang1, name2,
-             rang2, num1=100, num2=100):
+             rang2, num1=100, num2=100, verbose=False):
 
         self.n1 = name1
         self.n2 = name2
@@ -24,7 +24,7 @@ class TwoParamVarPlotter(Plotter):
             return str(tick)[:4]
             
         
-        setattr(potential, 'verbose', False)
+        setattr(potential, 'verbose', verbose)
 
         print('Start calculating closed surfaces. \n This may take a while ...')
         matrix = potential.two_parameter_variation_stability_test(name1,
@@ -36,17 +36,22 @@ class TwoParamVarPlotter(Plotter):
         print('Calculated Matrix.')
         print('Plotting ...')
         ax = self.figure.gca()
-        ax.imshow(matrix)
+        cmap = pl.get_cmap('autumn')
+        
+        ax.imshow(matrix, cmap=cmap)
+        
         ax.xaxis.set_major_formatter(pl.FuncFormatter(format_func_x))
         ax.yaxis.set_major_formatter(pl.FuncFormatter(format_func_y))
+
+        #ax.axvline(self.num2/2, c='black')
+        #ax.axhline(self.num1/2, c='black')
+
 
         ax.set_ylim(0, self.num1)
         ax.set_xlim(0, self.num2)
 
         ax.set_ylabel(self.n1)
         ax.set_xlabel(self.n2)
-
-        pl.grid()
 
         if self.save:
             pl.savefig(save)

@@ -78,21 +78,49 @@ class UtilStability():
             '''
             self._error_only_one_extremum(exit_if_not_stable)
 
-        if self.verbose and len(w_min) > 1 and len(w_max) > 1:
+        elif w_max[0] > w_max[1]:
+            '''
+            The potential is not closed, there is no Roche limit.
+            Matter will extend into infitiy.
+            '''
+            self._error_no_roche_limit(exit_if_not_stable)
+
+        elif self.verbose and len(w_min) > 1 and len(w_max) > 1:
             print('Potential is possibly stable')
 
         return 0
 
+    def closure_rating_function(self, w, r):
+        wmin, wmax, rmin, rmax = self.retrieve_extrema(w, r)
+
+        int_l = np.where(r == rmax[0])[0][0]
+        int_r = np.where(w > wmax[0])[0][0]
+
+        area_func = abs(w[int_l:int_r] - wmax)
+
+        area = np.trapz(area_func)
+
+        return area
+        
+
     def _error_monotonically(self, flag):
         if flag:
-            raise ValueError('Potential not stable, potential is monotonically.')
+            raise ValueError('Potential not closed, potential is monotonically.')
         else:
             if self.verbose:
-                print('WARNING: Potential not stable, potential is monotonically.')
+                print('WARNING: Potential not closed, potential is monotonically.')
                 
     def _error_only_one_extremum(self, flag):
         if flag:
-            raise ValueError('Potential not stable, only has one extremum.')
+            raise ValueError('Potential not closed, only has one extremum.')
         else:
             if self.verbose:
-                print('WARNING: Potential not stable, only has one extremum.')
+                print('WARNING: Potential not closed, only has one extremum.')
+
+
+    def _error_no_roche_limit(self, flag):
+        if flag:
+            raise ValueError('Potential is not closed, matter extends into infinity.')
+        else:
+            if self.verbose:
+                print('WARNING: Potential not close, no Roche limit.')
