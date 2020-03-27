@@ -1,5 +1,38 @@
 from vis.simple import Plotter
 import matplotlib.pyplot as pl
+import numpy as np
+
+class OneParamVarPlotter(Plotter):
+    def __init__(self, figsize=(10, 10), save=None):
+        super().__init__(figsize=figsize, save=save)
+
+    def plot(self, potential, name, rang, num=1000,
+             verbose=False):
+
+        setattr(potential, 'verbose', verbose)
+
+        print('Start calculating closed surfaces. \n This may take a while ...')
+
+        y_val = potential.one_parameter_variation_stability_test(name, rang,
+                                                                 num=num)
+
+        print('Plotting ...')
+        ax = pl.gca()
+        ax.plot(np.linspace(rang[0], rang[1], num=len(y_val)), y_val)
+
+        ax.set_ylim(0, 1.05)
+        ax.set_xlim(rang[0], rang[1])
+
+        ax.set_ylabel('closure rating')
+        ax.set_xlabel(name)
+
+        if self.save:
+            pl.savefig(save)
+
+        else:
+            pl.show()
+
+        
 
 class TwoParamVarPlotter(Plotter):
     def __init__(self, figsize=(10, 10), save=None):

@@ -45,11 +45,13 @@ class Potential():
             try:
                 w, r = check_for_stability(name, value)
                 closed_values.append(self.util.closure_rating_function(w, r))
-                print('- closed for {}={}!'.format(name, value))
+                if self.verbose:
+                    print('- closed for {}={}!'.format(name, value))
             except:
                 closed_values.append(0)
                 if log_open:
-                    print('- open for {}={}.'.format(name, value))
+                    if self.verbose:
+                        print('- open for {}={}.'.format(name, value))
                 else:
                     pass
 
@@ -90,6 +92,9 @@ class Potential():
                     else:
                         pass
             closed_values.append(row)
+
+        closed_values = np.array(closed_values) / np.amax(np.array(closed_values))
+
 
         return closed_values
 
