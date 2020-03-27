@@ -5,11 +5,10 @@ class InverseKerr(InversePotential):
     def __init__(self, w=-0.042, a=0.5, l=4.14,
                  r_range=(2, 18), num=10000, cont_without_eq=False,
                  verbose=True):
-        super().__init__(r_range=r_range, num=num,
+        super().__init__(w, r_range=r_range, num=num,
                          cont_without_eq=cont_without_eq,
                          verbose=verbose)
 
-        self.w = w
         self.a = a
         self.l = l
 

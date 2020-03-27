@@ -3,17 +3,15 @@ from spacetime.kerr import *
 from spacetime.qmetric import *
 from inverse.kerr import InverseKerr
 from inverse.schwarzschild import InverseSchwarzschild
+from inverse.qmetric import InverseQMetric
 from vis.simple import *
 from vis.polar import *
 from vis.variation import *
 
 import matplotlib.pyplot as pl
 
-
-k = Kerr(verbose=False, r_range=(2, 200))
-
-p = OneParamVarPlotter()
-p.plot(k, 'l', (3, 5), num=1000)
+pot = InverseQMetric()
 
 
-
+p = SimplePolarPlotter()
+p.plot(pot)
