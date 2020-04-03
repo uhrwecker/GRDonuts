@@ -1,10 +1,6 @@
 from spacetime import *
-from inverse.kerr import InverseKerr
-from inverse.schwarzschild import InverseSchwarzschild
-from inverse.qmetric import InverseQMetric
-from vis.simple import *
-from vis.polar import *
-from vis.variation import *
+from inverse import *
+from vis import *
 
 import time
 

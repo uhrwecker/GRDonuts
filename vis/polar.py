@@ -22,7 +22,7 @@ class SimplePolarPlotter(Plotter):
         else:
             pl.show()
 
-class PolarScharrPlotter(Plotter):
+class PolarScharPlotter(Plotter):
     def __init__(self, figsize=(10, 10), save=None):
         super().__init__(figsize=figsize, save=save)
 
