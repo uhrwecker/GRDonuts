@@ -9,7 +9,7 @@ class Potential():
         self.r = np.linspace(self.r_in, self.r_out, num=self.num)
         self.cwouteq = cont_without_eq
         self.verbose = verbose
-        self.util = UtilStability()
+        self.util = UtilStability(verbose)
 
     def compute_w(self):
         '''

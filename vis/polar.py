@@ -12,7 +12,7 @@ class SimplePolarPlotter(Plotter):
         rs = np.concatenate((r, r))
 
         theta_max = np.nanmax(np.abs(thetas))
-        pl.polar(thetas, rs)
+        pl.polar(thetas, rs, label=label)
         pl.ylim(r[0] - xmargin, r[-1] + xmargin)
         pl.xlim((-theta_max-ymargin)/180*np.pi, (theta_max+ymargin)/180*np.pi)
         pl.legend()

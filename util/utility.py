@@ -25,7 +25,7 @@ class UtilStability():
         self.verbose = verbose
 
     def retrieve_extrema(self, w, r):
-        self.check_for_stable_point(w, True)
+        self.check_for_stable_point(w, self.verbose)
         
         min_mask = np.r_[True, w[1:] < w[:-1]] & np.r_[w[:-1] < w[1:], True]
         max_mask = np.r_[True, w[1:] > w[:-1]] & np.r_[w[:-1] > w[1:], True]
@@ -62,6 +62,7 @@ class UtilStability():
         min_mask = np.r_[True, w[1:] < w[:-1]] & np.r_[w[:-1] < w[1:], True]
         max_mask = np.r_[True, w[1:] > w[:-1]] & np.r_[w[:-1] > w[1:], True]
 
+
         w_min = w[min_mask]
         w_max = w[max_mask]
 
@@ -71,7 +72,7 @@ class UtilStability():
             '''
             self._error_monotonically(exit_if_not_stable)
 
-        elif len(w_min) < 2 or len(w_max) < 2:
+        elif len(w_min) < 1 or len(w_max) < 2:
             '''
             The function has either a local maximum OR local minimum, but not
             both, thus is not stable
@@ -96,7 +97,7 @@ class UtilStability():
         int_l = np.where(r == rmax[0])[0][0]
         int_r = np.where(w > wmax[0])[0][0]
 
-        area_func = abs(w[int_l:int_r] - wmax)
+        area_func = abs(w[int_l:int_r] - wmax[-1])
 
         area = np.trapz(area_func)
 

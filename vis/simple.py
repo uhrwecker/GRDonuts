@@ -69,7 +69,6 @@ class BeautyPlotter(Plotter):
             int_l = np.where(r == rmax[0])[0][0]
         except:
             int_l = np.where(r == rmax[0])[0]
-        print(int_l)
         try:
             int_r = np.where(w > wmax[0])[0][0]
         except:

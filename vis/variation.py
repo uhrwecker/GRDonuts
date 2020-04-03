@@ -53,11 +53,11 @@ class TwoParamVarPlotter(Plotter):
 
         def format_func_x(value, tick_number):
             tick = self.r2[0] + (self.r2[1]-self.r2[0]) * value / self.num2 
-            return str(tick)[:4]
+            return str(tick)[:5]
 
         def format_func_y(value, tick_number):
             tick = self.r1[0] + (self.r1[1]-self.r1[0]) * value / self.num1
-            return str(tick)[:4]
+            return str(tick)[:5]
             
         
         setattr(potential, 'verbose', verbose)
