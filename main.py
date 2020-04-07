@@ -7,8 +7,8 @@ import time
 import matplotlib.pyplot as pl
 import numpy as np
 
-pot2 = QMetric(l=3, q=1, r_range=(0, 5), num=100000)
+pot = DistortedSchwarzschild(r_range=(0, 50), num=100000)
 
-p = BeautyPlotter()
-p.plot(pot2, ymargin=1, label='q=1, l=3')
+p = TwoParamVarPlotter()
+p.plot(pot, 'l', (0, 15), 'o', (-1, 1), num1=500, num2=500)
 
