@@ -1,14 +1,16 @@
 from spacetime import *
 from inverse import *
 from vis import *
+from von_zeipel import *
+
 
 import time
 
 import matplotlib.pyplot as pl
 import numpy as np
 
-pot2 = QMetric(l=3, q=1, r_range=(0, 5), num=100000)
+pot = VZCQMetric(q=5, num=100000, r_range=(0, 20))
 
-p = BeautyPlotter()
-p.plot(pot2, ymargin=1, label='q=1, l=3')
-
+pl = ScharVZCPlotter()
+pl.plot(pot, 'r0', rs=np.linspace(0, 20, num=15, endpoint=True),
+        label='q=5')

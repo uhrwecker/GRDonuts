@@ -6,7 +6,8 @@ class Potential():
                  verbose=True):
         self.r_in, self.r_out = r_range
         self.num = num
-        self.r = np.linspace(self.r_in, self.r_out, num=self.num)
+        self.r = np.linspace(self.r_in, self.r_out,
+                             num=self.num, endpoint=True)
         self.cwouteq = cont_without_eq
         self.verbose = verbose
         self.util = UtilStability(verbose)
@@ -41,7 +42,7 @@ class Potential():
         self.util.verbose = False
 
         closed_values = []
-        for value in np.linspace(rang[0], rang[1], num=num):
+        for value in np.linspace(rang[0], rang[1], num=num, endpoint=True):
             try:
                 w, r = check_for_stability(name, value)
                 closed_values.append(self.util.closure_rating_function(w, r))
@@ -74,9 +75,9 @@ class Potential():
         self.util.verbose = False
 
         closed_values = []
-        for v1 in np.linspace(rang1[0], rang1[1], num=num1):
+        for v1 in np.linspace(rang1[0], rang1[1], num=num1, endpoint=True):
             row = []
-            for v2 in np.linspace(rang2[0], rang2[1], num=num2):
+            for v2 in np.linspace(rang2[0], rang2[1], num=num2, endpoint=True):
                 try:
                     w, r = check_for_stability(name1, v1, name2, v2)
                     row.append(self.util.closure_rating_function(w, r))

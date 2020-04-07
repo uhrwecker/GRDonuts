@@ -4,4 +4,5 @@ from .variation import *
 
 __all__ = ['SimplePlotter', 'ScharPlotter', 'BeautyPlotter',
            'SimplePolarPlotter', 'PolarScharPlotter',
-           'OneParamVarPlotter', 'TwoParamVarPlotter']
+           'OneParamVarPlotter', 'TwoParamVarPlotter',
+           'SimpleVZCPlotter', 'ScharVZCPlotter']
