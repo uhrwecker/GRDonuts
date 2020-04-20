@@ -13,7 +13,11 @@ class SimplePolarPlotter(Plotter):
 
         theta_max = np.nanmax(np.abs(thetas))
         pl.polar(thetas, rs, label=label)
-        pl.ylim(r[0] - xmargin, r[-1] + xmargin)
+        print(type(xmargin))
+        if type(xmargin) == float or type(xmargin) == int: 
+            pl.ylim(r[0] - xmargin, r[-1] + xmargin)
+        else:
+            pl.ylim(xmargin[0], xmargin[1])
         pl.xlim((-theta_max-ymargin)/180*np.pi, (theta_max+ymargin)/180*np.pi)
         pl.legend()
         
