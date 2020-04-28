@@ -13,7 +13,11 @@ class SimplePolarPlotter(Plotter):
 
         theta_max = np.nanmax(np.abs(thetas))
         pl.polar(thetas, rs, label=label)
-        pl.ylim(r[0] - xmargin, r[-1] + xmargin)
+        print(type(xmargin))
+        if type(xmargin) == float or type(xmargin) == int: 
+            pl.ylim(r[0] - xmargin, r[-1] + xmargin)
+        else:
+            pl.ylim(xmargin[0], xmargin[1])
         pl.xlim((-theta_max-ymargin)/180*np.pi, (theta_max+ymargin)/180*np.pi)
         pl.legend()
         
@@ -21,6 +25,75 @@ class SimplePolarPlotter(Plotter):
             pl.savefig(self.save)
         else:
             pl.show()
+
+class SimpleVZCPlotter(Plotter):
+    def __init__(self, figsize=(10, 10), save=None):
+        super().__init__(figsize=figsize, save=save)
+
+    def plot(self, potential, label='', xmargin=0, ymargin=10):
+        thetas = potential.compute_theta()
+        r = potential.get_r()
+
+        theta_max = np.nanmax(np.abs(thetas[0]))
+        
+        pl.polar(thetas[0], r, label=label, c='blue')
+        pl.polar(thetas[1], r, label=label, c='blue')
+        
+        pl.ylim(r[0] - xmargin, r[-1] + xmargin)
+        pl.xlim(-np.pi/2,
+                np.pi/2)
+        pl.legend()
+        
+        if self.save:
+            pl.savefig(self.save)
+        else:
+            pl.show()
+
+
+class ScharVZCPlotter(Plotter):
+    def __init__(self, figsize=(10, 10), save=None):
+        super().__init__(figsize=figsize, save=save)
+
+    def plot(self, potential, name, rs, label='', xmargin=0, ymargin=10,
+             horizon=True):
+        for r in rs[:-1]:
+            setattr(potential, name, r)
+            thetas = potential.compute_theta()
+            r = potential.get_r()
+
+            theta_max = np.nanmax(np.abs(thetas[0]))
+            
+            pl.polar(thetas[0], r, c='blue')
+            pl.polar(thetas[1], r, c='blue')
+
+        r = rs[-1]
+        setattr(potential, name, r)
+        thetas = potential.compute_theta()
+        r = potential.get_r()
+
+        theta_max = np.nanmax(np.abs(thetas[0]))
+            
+        pl.polar(thetas[0], r, c='blue')
+        pl.polar(thetas[1], r, label=label, c='blue')
+        
+        
+        pl.ylim(r[0] - xmargin, r[-1] + xmargin)
+        pl.xlim(-np.pi/2,
+                np.pi/2)
+        pl.legend()
+
+        if horizon:
+            vartheta = np.linspace(0, np.pi*2, num=1000, endpoint=True)
+            hori = potential.horizon(vartheta)
+
+            pl.polar(vartheta, hori, label='Horizon', c='gray')
+            pl.fill_between(vartheta, 0, hori)
+        
+        if self.save:
+            pl.savefig(self.save)
+        else:
+            pl.show()
+
 
 class PolarScharPlotter(Plotter):
     def __init__(self, figsize=(10, 10), save=None):
@@ -37,7 +110,7 @@ class PolarScharPlotter(Plotter):
             pl.polar(thetas, rs, label=label)
 
         if horizon:
-            vartheta = np.linspace(0, np.pi*2, num=1000)
+            vartheta = np.linspace(0, np.pi*2, num=1000, endpoint=True)
             hori = item.horizon(vartheta)
 
             pl.polar(vartheta, hori, label='Horizon', c='gray')
