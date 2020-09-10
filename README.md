@@ -5,6 +5,15 @@ Toolkit for creating plots and computing stable equipotential surfaces of fluids
 
 For a minimal example, see main.py.
 
+Code snippets may include:
+
+from spacetime import Schwarzschild
+from vis import SimplePlotter
+
+pot = Schwarzschild(l=3.9)
+pl = SimplePlotter()
+pl.plot(pot)
+
 ## Developement
 
 See the issues for the current status of the code.
@@ -29,7 +38,7 @@ To plot any potential, simply call Plotter.plot(potential) (see documentary).
 
 ## Inverse potential and plotting
 
-Currently, for Kerr and Schwarzschild spacetimes, there is the possibility to look at the angular distribution, depending on the distance r. This will give you plots for a given value of the potential w. This is found in the inverse/ directory.
+Currently, for Kerr, Schwarzschild and q-metric spacetimes, there is the possibility to look at the angular distribution, depending on the distance r. This will give you plots for a given value of the potential w. This is found in the inverse/ directory.
 
 # 
 
