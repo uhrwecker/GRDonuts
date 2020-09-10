@@ -75,12 +75,14 @@ class TwoParamVarPlotter(Plotter):
         cmap = pl.get_cmap('autumn')
         
         ax.imshow(matrix, cmap=cmap)
+        # just for labels
+        ax.plot(0, 0, label='numerically computated closed surfaces', c='red')
         
         ax.xaxis.set_major_formatter(pl.FuncFormatter(format_func_x))
         ax.yaxis.set_major_formatter(pl.FuncFormatter(format_func_y))
 
         ax.axvline(self.num2/2, c='black')
-        ax.axhline(self.num1/2, c='black')
+        #ax.axhline(self.num1/2, c='black')
 
 
         ax.set_ylim(0, self.num1)
@@ -93,8 +95,9 @@ class TwoParamVarPlotter(Plotter):
             pl.savefig(self.save)
 
         else:
-            pl.show()
-        
+            #pl.show()
+
+            return ax
         
 
         

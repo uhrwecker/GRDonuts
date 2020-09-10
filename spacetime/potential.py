@@ -69,7 +69,9 @@ class Potential():
         def check_for_stability(name1, value1, name2, value2):            
             setattr(self, name1, value1)
             setattr(self, name2, value2)
-            return self.get_w(), self.get_r()
+            w = self.get_w()
+            r = self.get_r()
+            return w, r
 
         self.cwouteq = True
         self.util.verbose = False

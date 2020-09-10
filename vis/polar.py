@@ -13,7 +13,6 @@ class SimplePolarPlotter(Plotter):
 
         theta_max = np.nanmax(np.abs(thetas))
         pl.polar(thetas, rs, label=label)
-        print(type(xmargin))
         if type(xmargin) == float or type(xmargin) == int: 
             pl.ylim(r[0] - xmargin, r[-1] + xmargin)
         else:
@@ -55,7 +54,10 @@ class ScharVZCPlotter(Plotter):
         super().__init__(figsize=figsize, save=save)
 
     def plot(self, potential, name, rs, label='', xmargin=0, ymargin=10,
-             horizon=True):
+             horizon=True, ax=None):
+        if not ax:
+            ax = self.figure.add_subplot(111, projection='polar')
+            
         for r in rs[:-1]:
             setattr(potential, name, r)
             thetas = potential.compute_theta()
@@ -63,8 +65,8 @@ class ScharVZCPlotter(Plotter):
 
             theta_max = np.nanmax(np.abs(thetas[0]))
             
-            pl.polar(thetas[0], r, c='blue')
-            pl.polar(thetas[1], r, c='blue')
+            ax.plot(thetas[0], r, c='blue')
+            ax.plot(thetas[1], r, c='blue')
 
         r = rs[-1]
         setattr(potential, name, r)
@@ -73,26 +75,29 @@ class ScharVZCPlotter(Plotter):
 
         theta_max = np.nanmax(np.abs(thetas[0]))
             
-        pl.polar(thetas[0], r, c='blue')
-        pl.polar(thetas[1], r, label=label, c='blue')
+        ax.plot(thetas[0], r, c='blue')
+        ax.plot(thetas[1], r, label=label, c='blue')
         
         
-        pl.ylim(r[0] - xmargin, r[-1] + xmargin)
-        pl.xlim(-np.pi/2,
+        ax.set_ylim(r[0] - xmargin, r[-1] + xmargin)
+        ax.set_xlim(-np.pi/2,
                 np.pi/2)
-        pl.legend()
+
+        ax.set_xlabel('theta')
+        ax.set_ylabel('r/M')
+        ax.legend()
 
         if horizon:
             vartheta = np.linspace(0, np.pi*2, num=1000, endpoint=True)
             hori = potential.horizon(vartheta)
 
-            pl.polar(vartheta, hori, label='Horizon', c='gray')
-            pl.fill_between(vartheta, 0, hori)
+            ax.plot(vartheta, hori, label='Horizon', c='gray')
+            ax.fill_between(vartheta, 0, hori)
         
         if self.save:
             pl.savefig(self.save)
         else:
-            pl.show()
+            return ax
 
 
 class PolarScharPlotter(Plotter):
@@ -121,7 +126,7 @@ class PolarScharPlotter(Plotter):
             theta = last_closed.compute_theta()
             r = last_closed.get_r()
             rs = np.concatenate((r, r))
-            pl.polar(theta, rs, label='last closed surfaces at w={}'.format(last_closed.w),
+            pl.polar(theta, rs, label='last closed surfaces at w={}'.format(str(last_closed.w)[:8]),
                      c='black')
             
         pl.ylim(r[0] - xmargin, r[-1] + xmargin)

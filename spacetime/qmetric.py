@@ -22,3 +22,36 @@ class QMetric(Potential):
         w = 0.5 * np.log(oben/unten)
 
         return w
+
+class LkQMetric():
+    def __init__(self, rms=True, rmb=False):
+        self.rms = rms
+        self.rmb = rmb
+
+    def _lk(self, q, r):
+
+        alpha = 1 - 2/r
+
+        lk_up = r * np.sqrt(q+1)
+        lk_down = alpha**(1+q) * np.sqrt(r - q/alpha)
+
+        return lk_up/lk_down
+
+    def compute(self, q, r=None, plus=True):
+        l = []
+
+        if r:
+            l.append(self._lk(q, r))
+
+        if self.rms:
+            if plus:
+                r = 4+3*q + np.sqrt(5*q**2 + 10*q + 4)
+            else:
+                r = 4+3*q - np.sqrt(5*q**2 + 10*q + 4)
+            l.append(self._lk(q, r))
+
+        return l
+            
+        
+            
+        

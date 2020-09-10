@@ -66,13 +66,19 @@ class UtilStability():
         w_min = w[min_mask]
         w_max = w[max_mask]
 
+##        if w_max[0] == w[0] or w_max[0] == w[1]:
+##            '''
+##            The potentianl comes from +inf, so its not a stable point.
+##            '''
+##            raise ValueError()
+
         if len(w_min) < 2 and len(w_max) < 2:
             '''
             The function is monotonically. There is no stable point.
             '''
             self._error_monotonically(exit_if_not_stable)
 
-        elif len(w_min) < 1 or len(w_max) < 2:
+        elif len(w_min) < 1 or len(w_max) < 1:
             '''
             The function has either a local maximum OR local minimum, but not
             both, thus is not stable
